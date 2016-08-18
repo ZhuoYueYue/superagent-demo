@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="./node_modules/react/dist/react.min.js"></script>-->
+    <!--<script src="./node_modules/react-dom/dist/react-dom.min.js"></script>-->
+    <!--<script src="./node_modules/babel-standalone/babel.min.js"></script>-->
+    <script src="http://static.runoob.com/assets/react/react-0.14.7/build/react.min.js"></script>
+    <script src="http://static.runoob.com/assets/react/react-0.14.7/build/react-dom.min.js"></script>
+    <script src="http://static.runoob.com/assets/react/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/2.2.0/superagent.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/2.2.0/superagent.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/2.2.0/superagent.min.js.map"></script>
+</head>
+<body>
+<div id="content"></div>
+<script type="text/babel">
+    let SendMessage=React.createClass({
+
+        getInitialState:function() {
+            return {
+                title:"user"
+            }
+        },
+        render:function(){
+            return <div>
+                <input type="text" value={this.state.name} onChange={this._onTypeChange.bind(this)}/>
+                <button onClick={this._handle.bind(this)}>click</button>
+            </div>
+        },
+        _onTypeChange:function(event){
+            this.setState({
+                name: event.target.value
+            });
+        },
+        _handle:function(){
+            let self=this;
+            superagent
+                    .get('/a/'+self.state.name)
+                    .end(function (err, res) {
+                        if (res.ok) {
+                            console.log(res.text);
+                            self.setState({
+                                name:res.text
+                            })
+                        } else {
+                            console.log(err);
+                        }
+                    })
+
+        }
+    });
+
+    ReactDOM.render(
+    <SendMessage />,
+            document.getElementById('content')
+    );
+</script>
+</body>
+</html>
