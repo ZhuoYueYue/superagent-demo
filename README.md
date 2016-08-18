@@ -1,6 +1,8 @@
 a demo about superagent and react(ES5)
+```
 npm install
 node app.js
+```
 input localhost:3000 in your browser
 input something in text you will see zhuoyue
 
